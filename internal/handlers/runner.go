@@ -4,20 +4,11 @@ import (
 	"fmt"
 
 	"github.com/0xmukesh/aoc/internal/problems"
-	problems_2021 "github.com/0xmukesh/aoc/internal/problems/2021"
 	"github.com/0xmukesh/aoc/internal/utils"
 )
 
-type ProblemYearMap map[string]problems.Problem
-
-var problemsMap = map[string]ProblemYearMap{
-	"2021": {
-		"01": problems_2021.Problem_2021_01{},
-	},
-}
-
 func ProblemRunner(year string, problemNumber string, part string) {
-	yearMap, ok := problemsMap[year]
+	yearMap, ok := problems.ProblemsMap[year]
 	if !ok {
 		utils.EPrint(fmt.Sprintf("%s year doesn't exist", year))
 	}

@@ -9,12 +9,12 @@ import (
 	"github.com/0xmukesh/aoc/internal/utils"
 )
 
-var filename = "data/2021/01.txt"
-
 type Problem_2021_01 struct {
 }
 
 func (p Problem_2021_01) Input() string {
+	var filename = "data/2021/01.txt"
+
 	bytes, err := os.ReadFile(filename)
 	if err != nil {
 		utils.EPrint(err.Error())
