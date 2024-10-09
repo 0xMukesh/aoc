@@ -10,8 +10,7 @@ import (
 	"github.com/0xmukesh/aoc/internal/utils"
 )
 
-type Problem_2021_03 struct {
-}
+type Problem_2021_03 struct{}
 
 func (p Problem_2021_03) Input() string {
 	filename := "data/2021/03.txt"
@@ -47,24 +46,24 @@ func (p Problem_2021_03) ParseInput(input string) [][]int {
 	return parsedArray2d
 }
 
-func (p Problem_2021_03) GenerateTranspose(input [][]int) [][]int {
-	transpose := make([][]int, len(input[0]))
+// func (p Problem_2021_03) GenerateTranspose(input [][]int) [][]int {
+// 	transpose := make([][]int, len(input[0]))
 
-	for i := range transpose {
-		transpose[i] = make([]int, len(input))
-	}
+// 	for i := range transpose {
+// 		transpose[i] = make([]int, len(input))
+// 	}
 
-	for i, row := range input {
-		for j := range row {
-			transpose[j][i] = input[i][j]
-		}
-	}
+// 	for i, row := range input {
+// 		for j := range row {
+// 			transpose[j][i] = input[i][j]
+// 		}
+// 	}
 
-	return transpose
-}
+// 	return transpose
+// }
 
 func (p Problem_2021_03) Solve_01() error {
-	input := p.GenerateTranspose(p.ParseInput(p.Input()))
+	input := utils.Transpose(p.ParseInput(p.Input()))
 
 	gammaRateStr := ""
 	epsilonRateStr := ""
@@ -88,7 +87,7 @@ func (p Problem_2021_03) Solve_02() error {
 	array2d := p.ParseInput(p.Input())
 
 	for i := 0; len(array2d) > 1; i++ {
-		transpose := p.GenerateTranspose(array2d)
+		transpose := utils.Transpose(array2d)
 
 		if len(array2d) == 1 {
 			break
@@ -115,7 +114,7 @@ func (p Problem_2021_03) Solve_02() error {
 	array2d = p.ParseInput(p.Input())
 
 	for i := 0; len(array2d) > 1; i++ {
-		transpose := p.GenerateTranspose(array2d)
+		transpose := utils.Transpose(array2d)
 
 		if len(array2d) == 1 {
 			break

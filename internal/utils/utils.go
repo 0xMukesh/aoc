@@ -66,3 +66,19 @@ func LeastCommonElem[S ~[]E, E comparable](s S) (map[E]int, E) {
 
 	return hashmap, leastElem
 }
+
+func Transpose[S ~[][]E, E any](s S) [][]E {
+	transpose := make([][]E, len(s[0]))
+
+	for i := range transpose {
+		transpose[i] = make([]E, len(s))
+	}
+
+	for i := range s {
+		for j := range s[i] {
+			transpose[j][i] = s[i][j]
+		}
+	}
+
+	return transpose
+}

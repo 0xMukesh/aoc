@@ -10,11 +10,10 @@ import (
 	"github.com/0xmukesh/aoc/internal/utils"
 )
 
-type Problem_2021_02 struct {
-}
+type Problem_2021_02 struct{}
 
 func (p Problem_2021_02) Input() string {
-	var filename = "data/2021/02.txt"
+	filename := "data/2021/02.txt"
 
 	bytes, err := os.ReadFile(filename)
 	if err != nil {
