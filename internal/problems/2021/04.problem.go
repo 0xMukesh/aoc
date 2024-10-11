@@ -1,6 +1,7 @@
 package problems_2021
 
 import (
+	"errors"
 	"log"
 	"os"
 	"strconv"
@@ -95,5 +96,5 @@ outerLoop:
 }
 
 func (p Problem_2021_04) Solve_02() error {
-	return nil
+	return errors.New("not implemented")
 }
