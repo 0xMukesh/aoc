@@ -105,6 +105,7 @@ func (p Problem_2021_05) Solve_01() error {
 		p.AddPoint(&diagram, []int{start_coord_x, start_coord_y})
 		p.AddPoint(&diagram, []int{end_coord_x, end_coord_y})
 
+		// vertical line
 		if start_coord_x == end_coord_x {
 			var start int
 			var end int
@@ -122,6 +123,7 @@ func (p Problem_2021_05) Solve_01() error {
 			}
 		}
 
+		// horizontal line
 		if start_coord_y == end_coord_y {
 			var start int
 			var end int
@@ -166,5 +168,109 @@ func (p Problem_2021_05) Solve_01() error {
 }
 
 func (p Problem_2021_05) Solve_02() error {
+	input := p.ParseInput(p.Input())
+	diagram := make([][]string, p.MaxNum(input)+1)
+
+	for i := range diagram {
+		diagram[i] = make([]string, p.MaxNum(input)+1)
+
+		for j := range diagram[i] {
+			diagram[i][j] = "."
+		}
+	}
+
+	for i := range input {
+		row := input[i]
+
+		start_coord_x := row[0]
+		start_coord_y := row[1]
+		end_coord_x := row[2]
+		end_coord_y := row[3]
+
+		p.AddPoint(&diagram, []int{start_coord_x, start_coord_y})
+		p.AddPoint(&diagram, []int{end_coord_x, end_coord_y})
+
+		// vertical line
+		if start_coord_x == end_coord_x {
+			var start int
+			var end int
+
+			if start_coord_y < end_coord_y {
+				start = start_coord_y + 1
+				end = end_coord_y
+			} else {
+				start = end_coord_y + 1
+				end = start_coord_y
+			}
+
+			for j := start; j < end; j++ {
+				p.AddPoint(&diagram, []int{start_coord_x, j})
+			}
+		}
+
+		// horizontal line
+		if start_coord_y == end_coord_y {
+			var start int
+			var end int
+
+			if start_coord_x < end_coord_x {
+				start = start_coord_x + 1
+				end = end_coord_x
+			} else {
+				start = end_coord_x + 1
+				end = start_coord_x
+			}
+
+			for j := start; j < end; j++ {
+				p.AddPoint(&diagram, []int{j, start_coord_y})
+			}
+		}
+
+		// 45 degrees diagonal
+		if end_coord_x-start_coord_x != 0 {
+			slope := (end_coord_y - start_coord_y) / (end_coord_x - start_coord_x)
+
+			if slope == 1 || slope == -1 {
+				start := 0
+				end := 0
+				intercept := start_coord_y - (slope * start_coord_x)
+
+				if start_coord_x < end_coord_x {
+					start = start_coord_x + 1
+					end = end_coord_x
+				} else {
+					start = end_coord_x + 1
+					end = start_coord_x
+				}
+
+				for j := start; j < end; j++ {
+					yCoord := (slope)*j + intercept
+					p.AddPoint(&diagram, []int{j, yCoord})
+				}
+			}
+		}
+	}
+
+	count := 0
+
+	for i := range diagram {
+		for j := range diagram[i] {
+			if diagram[i][j] == "." {
+				continue
+			}
+
+			num, err := strconv.Atoi(diagram[i][j])
+			if err != nil {
+				return err
+			}
+
+			if num > 1 {
+				count++
+			}
+		}
+	}
+
+	log.Print(count)
+
 	return nil
 }
