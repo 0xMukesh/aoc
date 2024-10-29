@@ -62,28 +62,5 @@ func (p Problem_2021_06) Solve_01() error {
 }
 
 func (p Problem_2021_06) Solve_02() error {
-	input := p.ParseInput(p.Input())
-	i := 0
-
-	for {
-		if i >= 256 {
-			break
-		}
-
-		for j := range input {
-			if input[j] == 0 {
-				input[j] = 6
-				input = append(input, 8)
-				continue
-			}
-
-			input[j]--
-		}
-
-		i++
-	}
-
-	fmt.Println(len(input))
-
 	return nil
 }
