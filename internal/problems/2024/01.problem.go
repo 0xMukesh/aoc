@@ -80,5 +80,27 @@ func (p Problem_2024_01) Solve_01() error {
 }
 
 func (p Problem_2024_01) Solve_02() error {
+	input := p.Input()
+	leftList, rightList, err := p.ParseInput(input)
+	if err != nil {
+		return err
+	}
+
+	sum := 0.0
+
+	for i := range leftList {
+		counter := 0
+
+		for j := range rightList {
+			if rightList[j] == leftList[i] {
+				counter++
+			}
+		}
+
+		sum += float64(leftList[i] * counter)
+	}
+
+	fmt.Println(strconv.FormatFloat(sum, 'f', -1, 64))
+
 	return nil
 }
