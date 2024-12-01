@@ -3,7 +3,6 @@ package problems_2024
 import (
 	"errors"
 	"fmt"
-	"math"
 	"os"
 	"sort"
 	"strconv"
@@ -71,11 +70,11 @@ func (p Problem_2024_01) Solve_01() error {
 	sum := 0.0
 
 	for i := range leftList {
-		sum += math.Sqrt(math.Pow(float64(leftList[i]-rightList[i]), 2))
+		diff := leftList[i] - rightList[i]
+		sum += utils.Mod(float64(diff))
 	}
 
-	fmt.Println(strconv.FormatFloat(sum, 'f', -1, 64))
-
+	fmt.Println(utils.FormatFloat(sum))
 	return nil
 }
 
@@ -100,7 +99,6 @@ func (p Problem_2024_01) Solve_02() error {
 		sum += float64(leftList[i] * counter)
 	}
 
-	fmt.Println(strconv.FormatFloat(sum, 'f', -1, 64))
-
+	fmt.Println(utils.FormatFloat(sum))
 	return nil
 }

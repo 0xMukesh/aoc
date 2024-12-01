@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"math"
 	"os"
+	"strconv"
 )
 
 func EPrint(m any) {
@@ -81,4 +82,12 @@ func Transpose[S ~[][]E, E any](s S) [][]E {
 	}
 
 	return transpose
+}
+
+func Mod(num float64) float64 {
+	return math.Sqrt(math.Pow(num, 2))
+}
+
+func FormatFloat(f float64) string {
+	return strconv.FormatFloat(f, 'f', -1, 64)
 }
