@@ -3,18 +3,14 @@ package problems_2024
 import (
 	"fmt"
 	"os"
-	"strconv"
-	"unicode"
+	"regexp"
 
 	"github.com/0xmukesh/aoc/internal/utils"
 )
 
-type Problem_2024_03 struct {
-	input string
-	idx   int
-}
+type Problem_2024_03 struct{}
 
-func (p *Problem_2024_03) Input() string {
+func (p Problem_2024_03) Input() string {
 	filename := "data/2024/03.txt"
 
 	bytes, err := os.ReadFile(filename)
@@ -22,90 +18,24 @@ func (p *Problem_2024_03) Input() string {
 		utils.EPrint(err.Error())
 	}
 
-	p.input = string(bytes)
 	return string(bytes)
 }
 
-func (p *Problem_2024_03) Peek() byte {
-	return p.input[p.idx]
-}
-
-func (p *Problem_2024_03) Advance() {
-	p.idx++
-}
-
-func (p *Problem_2024_03) Curr() byte {
-	return p.input[p.idx-1]
-}
-
-func (p *Problem_2024_03) IsAtEnd() bool {
-	return p.idx >= len(p.input)
-}
-
-func (p *Problem_2024_03) ConsumeStr(str string) bool {
-	s := p.input[p.idx : p.idx+len(str)]
-	if s == str {
-		p.idx += len(str) + 1
-		return true
-	}
-
-	return false
-}
-
-func (p *Problem_2024_03) ReadNum() string {
-	s := string(p.Curr())
-
-	for unicode.IsDigit(rune(p.Peek())) {
-		p.Advance()
-		s += string(p.Curr())
-	}
-
-	return s
-}
-
-func (p *Problem_2024_03) TrimFirstChar(s string) string {
-	return s[1:]
-}
-
 func (p *Problem_2024_03) Solve_01() error {
-	p.Input()
+	input := p.Input()
+
+	r, err := regexp.Compile(`mul\([0-9]+,[0-9]+\)`)
+	if err != nil {
+		return err
+	}
 
 	sum := 0
+	matches := r.FindAllString(input, -1)
 
-	for !p.IsAtEnd() {
-		p.Advance()
-
-		ch := p.Curr()
-
-		if ch == 'm' {
-			found := p.ConsumeStr(p.TrimFirstChar("mul("))
-			if !found {
-				continue
-			}
-
-			firstNumStr := p.ReadNum()
-			found = p.ConsumeStr(",")
-			if !found {
-				continue
-			}
-
-			secondNumStr := p.ReadNum()
-			found = p.ConsumeStr(")")
-			if !found {
-				continue
-			}
-
-			firstNum, err := strconv.Atoi(firstNumStr)
-			if err != nil {
-				return err
-			}
-			secondNum, err := strconv.Atoi(secondNumStr)
-			if err != nil {
-				return err
-			}
-
-			sum += firstNum * secondNum
-		}
+	for _, text := range matches {
+		var num1, num2 int
+		fmt.Sscanf(text, "mul(%d,%d)", &num1, &num2)
+		sum += num1 * num2
 	}
 
 	fmt.Println(sum)
@@ -113,56 +43,30 @@ func (p *Problem_2024_03) Solve_01() error {
 }
 
 func (p Problem_2024_03) Solve_02() error {
-	p.Input()
+	input := p.Input()
+
+	r, err := regexp.Compile(`mul\([0-9]+,[0-9]+\)|do\(\)|don't\(\)`)
+	if err != nil {
+		return err
+	}
 
 	sum := 0
 	isDisabled := false
+	matches := r.FindAllString(input, -1)
 
-	for !p.IsAtEnd() {
-		p.Advance()
+	for _, text := range matches {
+		if text == "don't()" {
+			isDisabled = true
+		}
 
-		ch := p.Curr()
+		if text == "do()" {
+			isDisabled = false
+		}
 
-		if ch == 'm' && !isDisabled {
-			found := p.ConsumeStr(p.TrimFirstChar("mul("))
-			if !found {
-				continue
-			}
-
-			firstNumStr := p.ReadNum()
-			found = p.ConsumeStr(",")
-			if !found {
-				continue
-			}
-
-			secondNumStr := p.ReadNum()
-			found = p.ConsumeStr(")")
-			if !found {
-				continue
-			}
-
-			firstNum, err := strconv.Atoi(firstNumStr)
-			if err != nil {
-				return err
-			}
-			secondNum, err := strconv.Atoi(secondNumStr)
-			if err != nil {
-				return err
-			}
-
-			fmt.Printf("%d-%d\n", firstNum, secondNum)
-
-			sum += firstNum * secondNum
-		} else if ch == 'd' {
-			found := p.ConsumeStr(p.TrimFirstChar("don't()"))
-			if found {
-				isDisabled = true
-			}
-
-			found = p.ConsumeStr(p.TrimFirstChar("do()"))
-			if found {
-				isDisabled = false
-			}
+		if !isDisabled {
+			var num1, num2 int
+			fmt.Sscanf(text, "mul(%d,%d)", &num1, &num2)
+			sum += num1 * num2
 		}
 	}
 
