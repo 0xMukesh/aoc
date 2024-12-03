@@ -23,6 +23,7 @@ func (p Problem_2024_02) Input() string {
 
 	return string(bytes)
 }
+
 func (p Problem_2024_02) ParseInput(input string) ([][]int, error) {
 	lines := strings.Split(input, "\n")
 	parsed := make([][]int, len(lines))
@@ -121,7 +122,7 @@ func (p Problem_2024_02) Solve_02() error {
 			}
 
 			report = append(report[:i], report[i+1:]...)
-			isSafe = p.IsSafeReport(report)
+			isSafe := p.IsSafeReport(report)
 			if isSafe {
 				problemDampenerFound = true
 				sum++
@@ -130,6 +131,5 @@ func (p Problem_2024_02) Solve_02() error {
 	}
 
 	fmt.Println(sum)
-
 	return nil
 }
