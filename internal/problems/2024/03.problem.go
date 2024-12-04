@@ -21,7 +21,7 @@ func (p Problem_2024_03) Input() string {
 	return string(bytes)
 }
 
-func (p *Problem_2024_03) Solve_01() error {
+func (p Problem_2024_03) Solve_01() error {
 	input := p.Input()
 
 	r, err := regexp.Compile(`mul\([0-9]+,[0-9]+\)`)
