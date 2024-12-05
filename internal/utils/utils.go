@@ -91,3 +91,13 @@ func Mod(num float64) float64 {
 func FormatFloat(f float64) string {
 	return strconv.FormatFloat(f, 'f', -1, 64)
 }
+
+func GetIdxByVal[T ~[]E, E comparable](s T, val E) *int {
+	for i, v := range s {
+		if v == val {
+			return &i
+		}
+	}
+
+	return nil
+}

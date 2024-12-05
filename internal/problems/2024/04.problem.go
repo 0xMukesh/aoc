@@ -65,15 +65,14 @@ func (p Problem_2024_04) Solve_01() error {
 	grid := p.ParseInput(p.Input())
 	word := "XMAS"
 	directions := [][]int{
-		// {rowStep, colStep}
-		{0, 1},   // east
-		{0, -1},  // west
-		{1, 0},   // south
-		{-1, 0},  // north
-		{1, 1},   // south east
-		{1, -1},  // south west
-		{-1, 1},  // north east
-		{-1, -1}, // north west
+		{0, 1},
+		{0, -1},
+		{1, 0},
+		{-1, 0},
+		{1, 1},
+		{1, -1},
+		{-1, 1},
+		{-1, -1},
 	}
 
 	rows := len(grid)
