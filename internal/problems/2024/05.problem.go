@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"os"
 	"reflect"
-	"slices"
 	"sort"
 	"strconv"
 	"strings"
@@ -15,7 +14,7 @@ import (
 type Problem_2024_05 struct{}
 
 func (p Problem_2024_05) Input() string {
-	filename := "data/2024/05.mock.txt"
+	filename := "data/2024/05.txt"
 
 	bytes, err := os.ReadFile(filename)
 	if err != nil {
@@ -61,27 +60,24 @@ func (p Problem_2024_05) Solve_01() error {
 	sum := 0
 
 	for _, update := range updates {
-		isValidUpdate := 1
+		sortedUpdate := make([]int, len(update))
+		copy(sortedUpdate, update)
 
-		for i, pageNum := range update {
-			rule, ok := rules[pageNum]
+		sort.Slice(sortedUpdate, func(i, j int) bool {
+			rule, ok := rules[sortedUpdate[i]]
 
-			if !ok {
-				continue
-			}
-
-			for _, rulePageNum := range rule {
-				idx := slices.Index(update, rulePageNum)
-
-				if idx != -1 {
-					if idx <= i {
-						isValidUpdate *= 0
+			if ok {
+				for _, char := range rule {
+					if char == sortedUpdate[j] {
+						return true
 					}
 				}
 			}
-		}
 
-		if isValidUpdate != 0 {
+			return false
+		})
+
+		if reflect.DeepEqual(update, sortedUpdate) {
 			sum += update[len(update)/2]
 		}
 	}
