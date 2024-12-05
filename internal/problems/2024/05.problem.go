@@ -2,8 +2,10 @@ package problems_2024
 
 import (
 	"fmt"
-	"math"
 	"os"
+	"reflect"
+	"slices"
+	"sort"
 	"strconv"
 	"strings"
 
@@ -13,7 +15,7 @@ import (
 type Problem_2024_05 struct{}
 
 func (p Problem_2024_05) Input() string {
-	filename := "data/2024/05.txt"
+	filename := "data/2024/05.mock.txt"
 
 	bytes, err := os.ReadFile(filename)
 	if err != nil {
@@ -69,10 +71,10 @@ func (p Problem_2024_05) Solve_01() error {
 			}
 
 			for _, rulePageNum := range rule {
-				idx := utils.GetIdxByVal(update, rulePageNum)
+				idx := slices.Index(update, rulePageNum)
 
-				if idx != nil {
-					if *idx <= i {
+				if idx != -1 {
+					if idx <= i {
 						isValidUpdate *= 0
 					}
 				}
@@ -80,9 +82,7 @@ func (p Problem_2024_05) Solve_01() error {
 		}
 
 		if isValidUpdate != 0 {
-			middleElemIdx := int(math.Floor(float64(len(update)) / 2))
-			middleElem := update[middleElemIdx]
-			sum += middleElem
+			sum += update[len(update)/2]
 		}
 	}
 
@@ -91,5 +91,33 @@ func (p Problem_2024_05) Solve_01() error {
 }
 
 func (p Problem_2024_05) Solve_02() error {
+	rules, updates := p.ParseInput(p.Input())
+
+	sum := 0
+
+	for _, update := range updates {
+		sortedUpdate := make([]int, len(update))
+		copy(sortedUpdate, update)
+
+		sort.Slice(sortedUpdate, func(i, j int) bool {
+			rule, ok := rules[sortedUpdate[i]]
+
+			if ok {
+				for _, char := range rule {
+					if char == sortedUpdate[j] {
+						return true
+					}
+				}
+			}
+
+			return false
+		})
+
+		if !reflect.DeepEqual(update, sortedUpdate) {
+			sum += sortedUpdate[len(update)/2]
+		}
+	}
+
+	fmt.Println(sum)
 	return nil
 }

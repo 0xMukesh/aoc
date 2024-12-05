@@ -84,20 +84,14 @@ func Transpose[S ~[][]E, E any](s S) [][]E {
 	return transpose
 }
 
-func Mod(num float64) float64 {
-	return math.Sqrt(math.Pow(num, 2))
+func Abs(num float64) float64 {
+	if num < 0 {
+		return num * -1
+	} else {
+		return num
+	}
 }
 
 func FormatFloat(f float64) string {
 	return strconv.FormatFloat(f, 'f', -1, 64)
-}
-
-func GetIdxByVal[T ~[]E, E comparable](s T, val E) *int {
-	for i, v := range s {
-		if v == val {
-			return &i
-		}
-	}
-
-	return nil
 }

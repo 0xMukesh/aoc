@@ -71,7 +71,7 @@ func (p Problem_2024_01) Solve_01() error {
 
 	for i := range leftList {
 		diff := leftList[i] - rightList[i]
-		sum += utils.Mod(float64(diff))
+		sum += utils.Abs(float64(diff))
 	}
 
 	fmt.Println(utils.FormatFloat(sum))
