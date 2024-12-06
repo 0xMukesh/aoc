@@ -5,6 +5,7 @@ import (
 	"math"
 	"os"
 	"strconv"
+	"strings"
 )
 
 func EPrint(m any) {
@@ -94,4 +95,15 @@ func Abs(num float64) float64 {
 
 func FormatFloat(f float64) string {
 	return strconv.FormatFloat(f, 'f', -1, 64)
+}
+
+func PrettyPrint2dSlice[T any](slice [][]T) {
+	for _, row := range slice {
+		strRow := make([]string, len(row))
+		for j, val := range row {
+			strRow[j] = fmt.Sprintf("%v", val)
+		}
+
+		fmt.Printf("[%s]\n", strings.Join(strRow, ", "))
+	}
 }
