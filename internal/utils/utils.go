@@ -107,3 +107,23 @@ func PrettyPrint2dSlice[T any](slice [][]T) {
 		fmt.Printf("[%s]\n", strings.Join(strRow, ", "))
 	}
 }
+
+type CircularDirection = int
+
+const (
+	CircularLeft CircularDirection = iota
+	CircularRight
+)
+
+func CircularRotation(start, amount int, dir CircularDirection, size int) int {
+	amount = amount % size
+
+	switch dir {
+	case CircularLeft:
+		return (start - amount + size) % size
+	case CircularRight:
+		return (start + amount) % size
+	default:
+		return start
+	}
+}

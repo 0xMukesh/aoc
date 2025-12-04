@@ -18,15 +18,16 @@ func ProblemRunner(year string, problemNumber string, part string) {
 		utils.EPrint(fmt.Sprintf("%s problem doesn't exist in %s year", problemNumber, year))
 	}
 
-	if part == "1" {
+	switch part {
+	case "1":
 		if err := problem.Solve_01(); err != nil {
 			utils.EPrint(fmt.Sprintf("an error occured while running part 1 of %s problem of %s year\nerror: %s", problemNumber, year, err.Error()))
 		}
-	} else if part == "2" {
+	case "2":
 		if err := problem.Solve_02(); err != nil {
 			utils.EPrint(fmt.Sprintf("an error occured while running part 2 of %s problem of %s year\nerror: %s", problemNumber, year, err.Error()))
 		}
-	} else {
+	default:
 		utils.EPrint("invalid part number")
 	}
 }

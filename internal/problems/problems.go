@@ -3,6 +3,7 @@ package problems
 import (
 	problems_2021 "github.com/0xmukesh/aoc/internal/problems/2021"
 	problems_2024 "github.com/0xmukesh/aoc/internal/problems/2024"
+	problems_2025 "github.com/0xmukesh/aoc/internal/problems/2025"
 )
 
 type Problem interface {
@@ -31,5 +32,8 @@ var ProblemsMap = map[string]ProblemYearMap{
 		"04": problems_2024.Problem_2024_04{},
 		"05": problems_2024.Problem_2024_05{},
 		"06": problems_2024.Problem_2024_06{},
+	},
+	"2025": {
+		"01": problems_2025.Problem_2025_01{},
 	},
 }
