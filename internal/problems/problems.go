@@ -36,5 +36,6 @@ var ProblemsMap = map[string]ProblemYearMap{
 	"2025": {
 		"01": problems_2025.Problem_2025_01{},
 		"02": problems_2025.Problem_2025_02{},
+		"03": problems_2025.Problem_2025_03{},
 	},
 }
