@@ -78,7 +78,7 @@ func (p Problem_2025_01) Solve_02() error {
 			dir = utils.CircularRight
 		}
 
-		for j := 0; j < num; j++ {
+		for range num {
 			current = utils.CircularRotation(current, 1, dir, 100)
 
 			if current == 0 {
