@@ -74,7 +74,11 @@ func (p Problem_2025_03) Solve_02() error {
 			}
 		}
 
-		num, _ := strconv.Atoi(string(stack))
+		num, err := strconv.Atoi(string(stack))
+		if err != nil {
+			return err
+		}
+
 		counter = counter.Add(counter, big.NewInt(int64(num)))
 	}
 

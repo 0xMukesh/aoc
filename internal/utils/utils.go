@@ -127,3 +127,37 @@ func CircularRotation(start, amount int, dir CircularDirection, size int) int {
 		return start
 	}
 }
+
+func GetAdjacentPositionValuesInGrid[S ~[][]E, E any](s S, i, j int) []E {
+	rows := len(s)
+
+	if rows == 0 {
+		return nil
+	}
+	if i < 0 || i >= rows {
+		return nil
+	}
+
+	cols := max(len(s[0]), 0)
+
+	var adjacents []E
+
+	for dr := -1; dr <= 1; dr++ {
+		for dc := -1; dc <= 1; dc++ {
+			if dr == 0 && dc == 0 {
+				continue
+			}
+
+			r := i + dr
+			c := j + dc
+
+			if r < 0 || r >= rows || c < 0 || c >= cols {
+				continue
+			}
+
+			adjacents = append(adjacents, s[r][c])
+		}
+	}
+
+	return adjacents
+}
